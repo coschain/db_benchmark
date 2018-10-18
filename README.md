@@ -15,6 +15,8 @@ make -j4
 
 A series of tests were performed on different data scales. Results are measured in nano-seconds per record.
 
+Tests run on a macbook pro with 16GB DDR3 RAM, Intel Core i5 2.9GHz and SSD disk.
+
 *Note: an UPDATE operation queries the target first, and then changes its content.*
 
 ### initial dataset = 100,000
