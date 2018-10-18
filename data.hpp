@@ -71,6 +71,10 @@ public:
         return _key;
     }
     
+    void set_key(const KeyType& k) {
+        memcpy(&_key, &k, sizeof(KeyType));
+    }
+    
     const char* data() const {
         return _data;
     }
