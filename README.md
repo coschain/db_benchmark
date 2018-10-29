@@ -13,7 +13,7 @@ make -j4
 
 ## Results
 
-A series of tests were performed on different data scales. Results are measured in nano-seconds per record.
+A series of tests were performed on different data scales. Results are measured in ***nano-seconds per record***.
 
 Tests run on a macbook pro with 16GB DDR3 RAM, Intel Core i5 2.9GHz and SSD disk.
 
@@ -46,16 +46,16 @@ Tests run on a macbook pro with 16GB DDR3 RAM, Intel Core i5 2.9GHz and SSD disk
 | UPDATE      | 11076                  | 12748                     | 43868              | 58680                 |
 | DELETE      | 3631                   | 4810                      | 4032               | 4205                  |
 
-### special case with dataset = 150,000,000 with incremental int64 keys
+### special case with dataset = 150,000,000 with int64 keys
 
 150 million records and their indices are larger than physical RAM of testing machine, so that multi_index's mapping file has a much higher chance of page faults.
 
 |             | multi_index/key: int64 | leveldb/key: int64 |
 | ----------- | ---------------------- | -------------------|
-| INSERT      | 1454                   | 5529               |
-| QUERY       | 7914252                | 712440             |
-| UPDATE      | 6683568                | 769997             |
-| DELETE      | 17255614               | 4119               |
+| INSERT      | 5562617                | 142615             |
+| QUERY       | 3049534                | 333895             |
+| UPDATE      | 4016757                | 627281             |
+| DELETE      | 10836929               | 5781               |
 
 ### Conclusion
 
