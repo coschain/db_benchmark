@@ -29,7 +29,7 @@ public:
         record_with_i64_key r;
         int64_t max_key = _init_size;
         for (int64_t i = 0; i < _init_size; i++) {
-            r.set_key(i);
+            r.set_key(i + i);
             r.randomize_data();
             _db->put(r);
         }
@@ -37,21 +37,21 @@ public:
         std::size_t try_count = 100;
         std::vector<std::size_t> positions;
         
+        get_random_positions(max_key, try_count, positions);
         std::cout << "add " << try_count << " records...\n";
         t.reset(); t.start();
-        for (int64_t i = 0; i < try_count ; i++) {
-            r.set_key(i + max_key);
+        for (std::size_t p: positions) {
+            r.set_key((int64_t)(p + p + 1));
             _db->put(r);
         }
         t.stop();
-        max_key += try_count;
         std::cout << "avg = " << t.duration() / try_count << " ns per record\n";
         
         get_random_positions(max_key, try_count, positions);
         std::cout << "query " << try_count << " records...\n";
         t.reset(); t.start();
         for (std::size_t p: positions) {
-            _db->get((int64_t)p);
+            _db->get((int64_t)(p + p));
         }
         t.stop();
         std::cout << "avg = " << t.duration() / try_count << " ns per record\n";
@@ -60,7 +60,7 @@ public:
         std::cout << "update " << try_count << " records...\n";
         t.reset(); t.start();
         for (std::size_t p: positions) {
-            _db->modify((int64_t)p, [](record_with_i64_key& rec) {
+            _db->modify((int64_t)(p + p), [](record_with_i64_key& rec) {
                 rec.randomize_data();
             });
         }
@@ -71,7 +71,7 @@ public:
         std::cout << "delete " << try_count << " records...\n";
         t.reset(); t.start();
         for (std::size_t p: positions) {
-            _db->del((int64_t)p);
+            _db->del((int64_t)(p + p));
         }
         t.stop();
         std::cout << "avg = " << t.duration() / try_count << " ns per record\n";
